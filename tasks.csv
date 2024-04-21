@@ -1,2 +1,4 @@
 Title,Description,Due Date,Due Time,Priority,Category,Completed
-task 1,desc,2024-10-20,15:00,low,category 1,False
+Task 1,Sample description,2024-01-10,15:00,low,Category 1,False
+Task 2,Sample Description,2024-05-12,12:00,medium,Category 2,False
+Task 3,Sample Description,2024-10-03,16:00,high,category 3,False
