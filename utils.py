@@ -1,7 +1,7 @@
 from tabulate import tabulate
 import csv
 from task import Task
-
+from datetime import datetime
 
 tasks = []
 task_title_index = {}
@@ -66,10 +66,40 @@ def save_tasks():
 def add_task():
     """Add a new task."""
     task_title = input("Enter task title: ")
-    task_description = input("Enter task description: ")
-    due_date_str = input("Enter due date (YYYY-MM-DD): ")
-    due_time_str = input("Enter due time (HH:MMAM/PM): ")
-    task_priority = input("Enter priority (low, medium, high): ")
+    task_description = input("Enter task description (limited to 100 characters): ")
+
+    """Validate task description length"""
+    while len(task_description) > 100:
+        print("Task description exceeds the maximum allowed length of 100 characters.")
+        task_description = input("Please enter a shorter description: ")
+
+    """Input and validate due date"""
+    while True:
+        due_date_str = input("Enter due date (YYYY-MM-DD): ")
+        try:
+            datetime.strptime(due_date_str, "%Y-%m-%d")
+            break
+        except ValueError:
+            print("Invalid date format. Please enter the date in YYYY-MM-DD format.")
+
+    """Input and validate due time"""
+    while True:
+        due_time_str = input("Enter due time (HH:MMAM/PM): ")
+        try:
+            datetime.strptime(due_time_str, "%I:%M%p")
+            break
+        except ValueError:
+            print("Invalid time format. Please enter the time in HH:MMAM/PM format.")
+
+    """Input and validate priority"""
+    valid_priorities = ["low", "medium", "high"]
+    while True:
+        task_priority = input("Enter priority (low, medium, high): ").lower()
+        if task_priority in valid_priorities:
+            break
+        else:
+            print("Invalid priority. Please enter either 'low', 'medium', or 'high'.")
+
     task_category = input("Enter category: ")
 
     due_time_str = due_time_str.upper()
