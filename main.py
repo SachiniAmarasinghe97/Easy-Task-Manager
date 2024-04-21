@@ -1,44 +1,49 @@
-from task import Task
-from utils import add_task, view_tasks, filter_tasks_by_priority, filter_tasks_by_category, sort_tasks_by_due_datetime, mark_task_complete, remove_task, save_tasks
+from utils import add_task, view_tasks, filter_tasks_by_priority, filter_tasks_by_category, sort_tasks_by_due_datetime, \
+    mark_task_complete, remove_task, save_tasks, quit_task_manager
+
+
+def print_menu():
+    """Prints the menu options."""
+    menu_options = [
+        "Add Task",
+        "View Tasks",
+        "Filter Tasks by Priority",
+        "Filter Tasks by Category",
+        "Sort Tasks by Due Date & Time",
+        "Mark Task as Complete",
+        "Remove Task",
+        "Save Tasks",
+        "Quit"
+    ]
+    print("\n========= Easy Task Manager Application ==========")
+    for idx, option in enumerate(menu_options, start=1):
+        print(f"{idx}. {option}")
+
 
 def main():
+    menu_functions = {
+        "1": add_task,
+        "2": view_tasks,
+        "3": filter_tasks_by_priority,
+        "4": filter_tasks_by_category,
+        "5": sort_tasks_by_due_datetime,
+        "6": mark_task_complete,
+        "7": remove_task,
+        "8": save_tasks,
+        "9": quit_task_manager,
+    }
+
     while True:
-        print("\n========= Easy Task Manager Application ==========")
-        print("1. Add Task")
-        print("2. View Tasks")
-        print("3. Filter Tasks by Priority")
-        print("4. Filter Tasks by Category")
-        print("5. Sort Tasks by Due Date & Time")
-        print("6. Mark Task as Complete")
-        print("7. Remove Task")
-        print("8. Save Tasks")
-        print("9. Quit")
-
+        print_menu()
         choice = input("Enter your choice: ")
-
-        if choice == "1":
-            add_task()
-        elif choice == "2":
-            view_tasks()
-        elif choice == "3":
-            filter_tasks_by_priority()
-        elif choice == "4":
-            filter_tasks_by_category()
-        elif choice == "5":
-            sort_tasks_by_due_datetime()
-        elif choice == "6":
-            mark_task_complete()
-        elif choice == "7":
-            remove_task()
-        elif choice == "8":
-            save_tasks()
-            print("Tasks saved successfully.")
-        elif choice == "9":
-            save_tasks()
-            print("Exiting Task Manager. Goodbye!")
-            break
+        if choice in menu_functions:
+            menu_functions[choice]()
+            if choice == "9":
+                print("Exiting Task Manager. Goodbye!")
+                break
         else:
             print("Invalid choice. Please try again.")
+
 
 if __name__ == "__main__":
     main()

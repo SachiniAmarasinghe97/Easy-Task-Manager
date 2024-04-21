@@ -8,6 +8,7 @@ task_title_index = {}
 
 
 def view_tasks(filtered_tasks=None):
+    """View tasks with optional filtering."""
     if filtered_tasks is None:
         filtered_tasks = tasks
 
@@ -33,6 +34,7 @@ def view_tasks(filtered_tasks=None):
 
 
 def save_tasks():
+    """Save tasks to a CSV file."""
     with open("tasks.csv", "w", newline="") as file_obj:
         writer = csv.writer(file_obj)
         writer.writerow(["Title", "Description", "Due Date", "Due Time", "Priority", "Category", "Completed"])
@@ -58,9 +60,11 @@ def save_tasks():
                     curr_task.task_category,
                     str(curr_task.task_completed)
                 ])
+    print("Tasks saved successfully.")
 
 
 def add_task():
+    """Add a new task."""
     task_title = input("Enter task title: ")
     task_description = input("Enter task description: ")
     due_date_str = input("Enter due date (YYYY-MM-DD): ")
@@ -76,23 +80,27 @@ def add_task():
 
 
 def filter_tasks_by_priority():
+    """Filter tasks by priority."""
     task_priority = input("Enter priority to filter (low, medium, high): ")
     filtered_tasks = [t for t in tasks if t.task_priority == task_priority]
     view_tasks(filtered_tasks)
 
 
 def filter_tasks_by_category():
+    """Filter tasks by category."""
     task_category = input("Enter category to filter: ")
     filtered_tasks = [t for t in tasks if t.task_category == task_category]
     view_tasks(filtered_tasks)
 
 
 def sort_tasks_by_due_datetime():
+    """Sort tasks by due date and time."""
     sorted_tasks = sorted(tasks, key=lambda t: (t.task_due_date, t.task_due_time))
     view_tasks(sorted_tasks)
 
 
 def mark_task_complete():
+    """Mark a task as complete."""
     task_title = input("Enter task title to mark as complete: ")
     for t in tasks:
         if t.task_title == task_title:
@@ -103,6 +111,7 @@ def mark_task_complete():
 
 
 def remove_task():
+    """Remove a task."""
     task_title = input("Enter task title to remove: ")
     for t in tasks:
         if t.task_title == task_title:
@@ -110,3 +119,10 @@ def remove_task():
             print(f"Task '{task_title}' removed successfully.")
             return
     print(f"No task found with title '{task_title}'.")
+
+
+def quit_task_manager():
+    """Quit task manager."""
+    save_tasks()
+    print("Exiting Task Manager. Goodbye!")
+    exit()
